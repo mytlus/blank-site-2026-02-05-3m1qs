@@ -1,11 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CallYou AI — Event Concierge Demo</title>
+  <meta name="description" content="AI that answers event enquiries 24/7. Try the live voice demo for Safety, Health & Wellbeing Live London.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-glow: rgba(99,102,241,0.35);
+  --accent: #06b6d4;
+  --accent-glow: rgba(6,182,212,0.3);
+  --green: #22c55e;
+  --green-glow: rgba(34,197,94,0.25);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; background: #0a0a1a;
+}
+.bg-gradient {
+  position: fixed; inset: 0; z-index: -2;
+  background: linear-gradient(135deg, #0a0a1a 0%, #0f0f2e 25%, #0a1628 50%, #0d1117 100%);
+}
+.bg-orbs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.bg-orbs .orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.bg-orbs .orb-1 {
+  width: 600px; height: 600px; top: -200px; left: -100px;
+  background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+}
+.bg-orbs .orb-2 {
+  width: 500px; height: 500px; top: 40%; right: -150px;
+  background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+  animation-delay: -7s; animation-duration: 25s;
+}
+.bg-orbs .orb-3 {
+  width: 400px; height: 400px; bottom: -100px; left: 30%;
+  background: radial-gradient(circle, rgba(168,85,247,0.2), transparent 70%);
+  animation-delay: -14s; animation-duration: 30s;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 30px) scale(0.95); }
+}
+.section-light {
+  position: relative;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  color: #0f172a;
+}
+.section-light::before {
+  content: ''; position: absolute; top: -60px; left: 0; right: 0; height: 60px;
+  background: linear-gradient(180deg, transparent, #f8fafc); pointer-events: none;
+}
+.section-light::after {
+  content: ''; position: absolute; bottom: -60px; left: 0; right: 0; height: 60px;
+  background: linear-gradient(180deg, #eef2ff, transparent); pointer-events: none; z-index: 1;
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px;
+  background: rgba(10,10,26,0.6);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.3s;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; height: 72px;
+}
+.nav-logo {
+  font-weight: 800; font-size: 22px; color: #fff;
+  text-decoration: none; display: flex; align-items: center; gap: 10px;
+  letter-spacing: -0.02em;
+}
+.nav-logo svg { width: 30px; height: 30px; stroke: var(--primary); }
+.nav-logo span {
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff; border: none; border-radius: var(--radius-xs);
+  padding: 10px 24px; font-weight: 600; font-size: 14px; cursor: pointer;
+  transition: all 0.3s; box-shadow: 0 0 20px var(--primary-glow);
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 0 30px var(--primary-glow); }
+section { padding: 120px 24px; position: relative; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section-divider {
+  width: 80px; height: 3px; margin: 0 auto 40px;
+  background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 2px;
+}
+.section-divider-dark { opacity: 0.5; }
+.hero {
+  padding: 180px 24px 140px; text-align: center;
+  position: relative; overflow: hidden;
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 70%);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(99,102,241,0.15); color: var(--primary);
+  font-size: 13px; font-weight: 600; padding: 8px 18px;
+  border-radius: 100px; margin-bottom: 32px;
+  border: 1px solid rgba(99,102,241,0.25); backdrop-filter: blur(10px);
+}
+.hero-badge .dot {
+  width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+  box-shadow: 0 0 12px var(--green-glow); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+.hero h1 {
+  font-size: clamp(40px, 6vw, 76px); font-weight: 900; line-height: 1.05;
+  letter-spacing: -0.03em; margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 50%, var(--accent) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p {
+  font-size: clamp(17px, 2vw, 21px); color: rgba(255,255,255,0.55);
+  max-width: 600px; margin: 0 auto 48px; line-height: 1.7;
+}
+.hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff; border: none; border-radius: var(--radius-sm);
+  padding: 18px 36px; font-weight: 600; font-size: 16px; cursor: pointer;
+  transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 0 30px var(--primary-glow), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px var(--primary-glow), inset 0 1px 0 rgba(255,255,255,0.15); }
+.btn-secondary {
+  background: rgba(255,255,255,0.06); color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm); padding: 18px 36px;
+  font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+.btn-white {
+  background: #fff; color: var(--primary-dark); border: none; border-radius: var(--radius-sm);
+  padding: 18px 40px; font-weight: 700; font-size: 17px; cursor: pointer;
+  transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
+.btn-white-outline {
+  background: rgba(255,255,255,0.06); color: #fff;
+  border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-sm);
+  padding: 18px 36px; font-weight: 700; font-size: 17px; cursor: pointer;
+  text-decoration: none; transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 10px; backdrop-filter: blur(10px);
+}
+.btn-white-outline:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.4); transform: translateY(-3px); }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.demo-section { padding: 100px 24px; }
+.demo-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+  max-width: 1100px; margin: 0 auto;
+}
+.demo-info { padding-top: 20px; }
+.demo-info h2 {
+  font-size: 32px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.demo-info .event-name {
+  font-size: 18px; color: var(--accent); font-weight: 600; margin-bottom: 24px;
+}
+.demo-info p { color: rgba(255,255,255,0.55); font-size: 15px; line-height: 1.8; margin-bottom: 20px; }
+.info-list { list-style: none; margin-bottom: 32px; }
+.info-list li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 15px; color: rgba(255,255,255,0.7);
+}
+.info-list li .li-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+  background: rgba(99,102,241,0.1);
+}
+.info-list li:last-child { border-bottom: none; }
+.voice-panel {
+  padding: 48px 36px; text-align: center;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.voice-panel h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.voice-panel .voice-sub { color: rgba(255,255,255,0.4); font-size: 14px; margin-bottom: 32px; }
+.mic-btn {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 40px var(--primary-glow), inset 0 2px 0 rgba(255,255,255,0.15);
+  position: relative;
+}
+.mic-btn::before {
+  content: ''; position: absolute; inset: -5px; border-radius: 50%;
+  border: 2px solid rgba(99,102,241,0.3);
+  animation: mic-ring 3s ease-in-out infinite;
+}
+@keyframes mic-ring {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.12); opacity: 0; }
+}
+.mic-btn:hover { transform: scale(1.08); box-shadow: 0 0 60px var(--primary-glow); }
+.mic-btn.active {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 0 40px rgba(239,68,68,0.4);
+  animation: mic-pulse 1.5s infinite;
+}
+.mic-btn.active::before { border-color: rgba(239,68,68,0.3); }
+@keyframes mic-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+  70% { box-shadow: 0 0 0 24px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+.mic-btn svg { width: 44px; height: 44px; fill: #fff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+.mic-label { font-weight: 600; font-size: 17px; color: #fff; margin-bottom: 6px; }
+.mic-status { font-size: 14px; font-weight: 500; color: var(--accent); min-height: 22px; margin-bottom: 24px; }
+.call-phone-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius-xs);
+  background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2);
+  color: var(--green); font-weight: 600; font-size: 15px;
+  text-decoration: none; transition: all 0.3s;
+}
+.call-phone-btn:hover { background: rgba(34,197,94,0.2); transform: translateY(-1px); }
+.call-phone-btn svg { width: 18px; height: 18px; }
+.try-asking { z-index: 2; }
+.try-asking h2 {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-align: center;
+  margin-bottom: 12px; letter-spacing: -0.02em; color: #0f172a;
+}
+.try-asking .subtitle { text-align: center; color: #64748b; font-size: 17px; margin-bottom: 56px; }
+.prompts-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px; max-width: 900px; margin: 0 auto;
+}
+.prompt-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 24px; border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: all 0.3s; cursor: default;
+}
+.prompt-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.06); }
+.prompt-icon {
+  width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-xs);
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.1));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary); font-size: 18px;
+}
+.prompt-card p { font-size: 15px; color: #334155; font-weight: 500; line-height: 1.5; }
+.prompt-card p em { font-style: italic; color: #64748b; }
+.how-it-works { z-index: 2; }
+.how-it-works h2 {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-align: center;
+  margin-bottom: 12px; letter-spacing: -0.02em; color: #0f172a;
+}
+.how-it-works .subtitle { text-align: center; color: #64748b; font-size: 17px; margin-bottom: 64px; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.step-card {
+  padding: 36px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.08); }
+.step-number {
+  width: 44px; height: 44px; border-radius: var(--radius-xs);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 17px; margin-bottom: 20px;
+}
+.step-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+.step-card p { color: #64748b; font-size: 15px; line-height: 1.7; }
+.step-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.step-tag {
+  font-size: 12px; font-weight: 600; padding: 5px 12px;
+  border-radius: 100px; background: rgba(99,102,241,0.08); color: var(--primary);
+}
+.automation h2 {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-align: center;
+  margin-bottom: 12px; letter-spacing: -0.02em;
+}
+.automation .subtitle { text-align: center; color: rgba(255,255,255,0.5); font-size: 17px; margin-bottom: 64px; }
+.auto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.auto-card {
+  padding: 32px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  text-align: center; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.auto-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
+.auto-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px; font-size: 28px;
+}
+.auto-icon.calendar { background: rgba(34,197,94,0.12); }
+.auto-icon.whatsapp { background: rgba(6,182,212,0.12); }
+.auto-icon.lead { background: rgba(99,102,241,0.12); }
+.auto-icon.analysis { background: rgba(168,85,247,0.12); }
+.auto-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.auto-card p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+.auto-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--green); margin-top: 16px;
+}
+.auto-status .dot {
+  width: 7px; height: 7px; background: var(--green); border-radius: 50%;
+  box-shadow: 0 0 8px var(--green-glow);
+}
+.cta-section { text-align: center; padding: 140px 24px; position: relative; overflow: hidden; }
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-size: clamp(32px, 5vw, 52px); font-weight: 900;
+  margin-bottom: 20px; line-height: 1.1; letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff, rgba(255,255,255,0.6));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.cta-section p { font-size: 19px; color: rgba(255,255,255,0.5); max-width: 560px; margin: 0 auto 44px; }
+footer {
+  padding: 48px 24px; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.3); font-size: 14px;
+}
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+.stagger.visible > *:nth-child(3) { transition-delay: 0.25s; }
+.stagger.visible > *:nth-child(4) { transition-delay: 0.35s; }
+.stagger.visible > *:nth-child(5) { transition-delay: 0.45s; }
+.stagger.visible > * { opacity: 1; transform: translateY(0); }
+[data-parallax] { transition: transform 0.1s linear; will-change: transform; }
+@media (max-width: 768px) {
+  section { padding: 80px 16px; }
+  .hero { padding: 140px 16px 100px; min-height: auto; }
+  .hero-buttons, .cta-buttons { flex-direction: column; align-items: center; }
+  .nav-links { display: none; }
+  .demo-grid { grid-template-columns: 1fr; }
+  .voice-panel { padding: 36px 24px; }
+  .call-us-number { font-size: 28px; padding: 14px 28px; }
+}
+  </style>
 </head>
 <body>
-    <p>hello world</p>
+
+  <!-- BACKGROUND -->
+  <div class="bg-gradient"></div>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>CallYou.ai</span>
+      </a>
+      <div class="nav-links">
+        <a href="#demo">Demo</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#automation">Automation</a>
+        <a href="tel:+442038932108">020 3893 2108</a>
+      </div>
+      <button class="nav-cta" onclick="startVoiceDemo()">Try Demo</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content container" data-parallax="0.08">
+      <div class="hero-badge reveal"><span class="dot"></span> Live Demo — AI Event Concierge</div>
+      <h1 class="reveal reveal-delay-1">AI Event Concierge<br>Demo</h1>
+      <p class="reveal reveal-delay-2">Live voice AI assistant for events. Talk to the concierge for Safety, Health & Wellbeing Live London — powered by CallYou.ai.</p>
+      <div class="hero-buttons reveal reveal-delay-3">
+        <button class="btn-primary" onclick="startVoiceDemo()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Talk to the AI Concierge
+        </button>
+        <a href="tel:+442038932108" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call: 020 3893 2108
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO SPLIT SECTION -->
+  <section class="demo-section" id="demo">
+    <div class="demo-grid">
+      <!-- LEFT: Event Info -->
+      <div class="demo-info reveal">
+        <h2>About the Event</h2>
+        <div class="event-name">Safety, Health & Wellbeing Live London</div>
+        <p>A leading industry event bringing together professionals focused on workplace safety, occupational health, and employee wellbeing. Taking place in London in July.</p>
+        <ul class="info-list">
+          <li>
+            <span class="li-icon">&#127915;</span>
+            <span><strong>Visitor Enquiries</strong> — Professionals wanting to attend, explore sessions, and network</span>
+          </li>
+          <li>
+            <span class="li-icon">&#127970;</span>
+            <span><strong>Exhibitor Enquiries</strong> — Companies looking to showcase safety and wellbeing solutions</span>
+          </li>
+          <li>
+            <span class="li-icon">&#11088;</span>
+            <span><strong>Sponsorship</strong> — Organisations seeking visibility among senior decision-makers</span>
+          </li>
+          <li>
+            <span class="li-icon">&#128197;</span>
+            <span><strong>Meeting Booking</strong> — AI checks availability and books meetings on the spot</span>
+          </li>
+          <li>
+            <span class="li-icon">&#128100;</span>
+            <span><strong>Lead Capture</strong> — Contact details and intent captured and routed automatically</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: Voice Interface -->
+      <div class="voice-panel reveal reveal-delay-2">
+        <h3>Talk to the AI Event Concierge</h3>
+        <p class="voice-sub">Click the microphone and speak naturally</p>
+        <button class="mic-btn" id="micBtn" onclick="toggleVoice()">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>
+        </button>
+        <div class="mic-label" id="micLabel">Click to Start</div>
+        <div class="mic-status" id="micStatus"></div>
+        <a href="tel:+442038932108" class="call-phone-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call the AI Phone Line: 020 3893 2108
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY ASKING (LIGHT) -->
+  <section class="try-asking section-light" id="try-asking">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="reveal">Try Asking the AI</h2>
+      <p class="subtitle reveal reveal-delay-1">Here are some things you can say to test the concierge.</p>
+      <div class="prompts-grid stagger reveal">
+        <div class="prompt-card">
+          <div class="prompt-icon">&#128172;</div>
+          <p><em>"I'd like to attend the event"</em></p>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-icon">&#127970;</div>
+          <p><em>"Can my company exhibit?"</em></p>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-icon">&#128101;</div>
+          <p><em>"Who usually attends this event?"</em></p>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-icon">&#11088;</div>
+          <p><em>"I'd like to speak to someone about sponsorship"</em></p>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-icon">&#128197;</div>
+          <p><em>"Can I book a meeting with the team?"</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (LIGHT) -->
+  <section class="how-it-works section-light" id="how-it-works" style="padding-top:80px;">
+    <div class="container">
+      <h2 class="reveal">How It Works</h2>
+      <p class="subtitle reveal reveal-delay-1">Three steps from call to action — fully automated.</p>
+      <div class="steps-grid stagger reveal">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Caller Asks About the Event</h3>
+          <p>The AI answers instantly — no hold times, no voicemail. Handles visitor, exhibitor, and sponsor enquiries.</p>
+          <div class="step-tags">
+            <span class="step-tag">Visitor info</span>
+            <span class="step-tag">Exhibitor pricing</span>
+            <span class="step-tag">Sponsorship</span>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>AI Captures Lead Information</h3>
+          <p>Contact details, company name, enquiry topic, and intent captured in a structured format.</p>
+          <div class="step-tags">
+            <span class="step-tag">Name & email</span>
+            <span class="step-tag">Company</span>
+            <span class="step-tag">Intent</span>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>CallYou Triggers Automation</h3>
+          <p>Leads routed instantly. Sales alerted via WhatsApp. Meetings booked on Google Calendar.</p>
+          <div class="step-tags">
+            <span class="step-tag">WhatsApp alert</span>
+            <span class="step-tag">Calendar booking</span>
+            <span class="step-tag">Email follow-up</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION (DARK) -->
+  <section class="automation" id="automation">
+    <div class="container">
+      <div class="section-divider section-divider-dark reveal"></div>
+      <h2 class="reveal">Live Automation — Connected Now</h2>
+      <p class="subtitle reveal reveal-delay-1">Every feature below is active and wired to real services.</p>
+      <div class="auto-grid stagger reveal">
+        <div class="auto-card">
+          <div class="auto-icon calendar">&#128197;</div>
+          <h3>Google Calendar</h3>
+          <p>Checks availability and creates events automatically.</p>
+          <div class="auto-status"><span class="dot"></span> Connected</div>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon whatsapp">&#128172;</div>
+          <h3>WhatsApp Alerts</h3>
+          <p>Sales leads and callbacks sent instantly via Twilio.</p>
+          <div class="auto-status"><span class="dot"></span> Connected</div>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon lead">&#128100;</div>
+          <h3>Lead Capture</h3>
+          <p>Structured data extracted from every call.</p>
+          <div class="auto-status"><span class="dot"></span> Connected</div>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon analysis">&#128202;</div>
+          <h3>Post-Call Analysis</h3>
+          <p>Every call summarised with outcome tracking.</p>
+          <div class="auto-status"><span class="dot"></span> Connected</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="reveal">Ready to Hear It<br>in Action?</h2>
+      <p class="reveal reveal-delay-1">Try the web demo or call the AI phone line directly.</p>
+      <div class="cta-buttons reveal reveal-delay-2">
+        <button class="btn-white" onclick="startVoiceDemo()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Start Voice Demo
+        </button>
+        <a href="tel:+442038932108" class="btn-white-outline">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call: 020 3893 2108
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>CallYou.ai — AI Voice Assistants for Events & Business</p>
+      <p style="margin-top:8px; font-size:12px; opacity:0.5;">Demo for Safety, Health & Wellbeing Live London &middot; Olympia London &middot; July 2026</p>
+    </div>
+  </footer>
+
+  <script type="module">
+const VAPI_PUBLIC_KEY = 'b4fbedb0-6f98-43af-b9b2-7b863b372cbc';
+const ASSISTANT_ID = '7a9f754b-016a-4d33-b651-f2bccb953ddf';
+
+let vapi = null;
+let isCallActive = false;
+let VapiClass = null;
+
+async function loadVapiSDK() {
+  try {
+    const module = await import('https://esm.sh/@vapi-ai/web@2.5.2');
+    const VapiDefault = module.default;
+    VapiClass = typeof VapiDefault === 'function'
+      ? VapiDefault
+      : (VapiDefault && typeof VapiDefault.default === 'function' ? VapiDefault.default : null);
+    if (VapiClass) {
+      console.log('[Vapi] SDK loaded successfully');
+    } else {
+      console.error('[Vapi] Could not resolve constructor');
+      setStatus('Voice SDK failed to load');
+    }
+  } catch (e) {
+    console.error('[Vapi] SDK load error:', e);
+    setStatus('Voice SDK unavailable');
+  }
+}
+
+function initVapi() {
+  if (!VapiClass) { setStatus('Voice SDK loading...'); return false; }
+  if (!vapi) {
+    try {
+      vapi = new VapiClass(VAPI_PUBLIC_KEY);
+      console.log('[Vapi] Instance created');
+    } catch (e) {
+      console.error('[Vapi] Init error:', e);
+      setStatus('Voice init error');
+      return false;
+    }
+    vapi.on('call-start', () => {
+      isCallActive = true;
+      updateMicUI(true);
+      setStatus('Connected — speak now');
+    });
+    vapi.on('call-end', () => {
+      isCallActive = false;
+      updateMicUI(false);
+      setStatus('Call ended');
+      setTimeout(() => setStatus(''), 3000);
+    });
+    vapi.on('speech-start', () => setStatus('AI is speaking...'));
+    vapi.on('speech-end', () => setStatus('Listening...'));
+    vapi.on('message', (msg) => {
+      if (msg.type === 'transcript') {
+        if (msg.transcriptType === 'partial') {
+          setStatus('Hearing: ' + msg.transcript);
+        } else if (msg.transcriptType === 'final') {
+          setStatus('Processing...');
+        }
+      } else if (msg.type === 'function-call' || msg.type === 'tool-calls') {
+        setStatus('Running action...');
+      }
+    });
+    vapi.on('error', (e) => {
+      console.error('[Vapi] error:', e);
+      isCallActive = false;
+      updateMicUI(false);
+      setStatus('Connection error — try again');
+    });
+  }
+  return true;
+}
+
+function toggleVoice() {
+  if (!initVapi()) return;
+  if (isCallActive) {
+    vapi.stop();
+    isCallActive = false;
+    updateMicUI(false);
+    setStatus('Ending call...');
+  } else {
+    setStatus('Connecting...');
+    vapi.start(ASSISTANT_ID).then(() => {
+      console.log('[Vapi] Call started');
+    }).catch((err) => {
+      console.error('[Vapi] Start error:', err);
+      isCallActive = false;
+      updateMicUI(false);
+      setStatus('Failed to connect');
+    });
+  }
+}
+
+function startVoiceDemo() {
+  const el = document.getElementById('demo');
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => toggleVoice(), 600);
+}
+
+function updateMicUI(active) {
+  const btn = document.getElementById('micBtn');
+  const label = document.getElementById('micLabel');
+  if (btn) btn.classList.toggle('active', active);
+  if (label) label.textContent = active ? 'Click to End Call' : 'Click to Start';
+}
+
+function setStatus(text) {
+  const el = document.getElementById('micStatus');
+  if (el) el.textContent = text;
+}
+
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function initParallax() {
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        document.querySelectorAll('[data-parallax]').forEach(el => {
+          const speed = parseFloat(el.dataset.parallax) || 0.1;
+          el.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
+        });
+        const nav = document.querySelector('nav');
+        if (nav) nav.style.background = scrollY > 80 ? 'rgba(10,10,26,0.85)' : 'rgba(10,10,26,0.6)';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadVapiSDK();
+  initReveal();
+  initParallax();
+  initSmoothScroll();
+});
+
+window.toggleVoice = toggleVoice;
+window.startVoiceDemo = startVoiceDemo;
+  </script>
+
 </body>
 </html>
